@@ -1,4 +1,5 @@
 const express = require('express');
+let axios = require('axios');
 let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
@@ -104,3 +105,39 @@ public_users.get('/review/:isbn', function (req, res) {
 });
 
 module.exports.general = public_users;
+
+
+
+
+
+// Function to fetch all books using async/await
+async function fetchAllBooks() {
+  let fetchPromise = await axios('http://localhost:8080/');
+  console.log(fetchPromise.data);
+}
+
+// Function to fetch books by ISBN using promises
+function fetchBooksByISBN(isbn) {
+  let fetchPromise = axios(`http://localhost:8080/isbn/${isbn}`);
+  fetchPromise.then((data) => {
+    console.log(data.data);
+  })
+}
+
+// Function to fetch books by author using async/await
+async function fetchBooksByAuthor(author) {
+  let fetchPromise = await axios(`http://localhost:8080/author/${author}`);
+  console.log(fetchPromise.data);
+}
+
+// Function to fetch books by title using async/await
+async function fetchBooksByTitle(title) {
+  let fetchPromise = await axios(`http://localhost:8080/title/${title}`);
+  console.log(fetchPromise.data);
+}
+
+
+// fetchAllBooks()
+// fetchBooksByISBN(1)
+// fetchBooksByAuthor("Unknown")
+// fetchBooksByTitle("The Epic Of Gilgamesh")
